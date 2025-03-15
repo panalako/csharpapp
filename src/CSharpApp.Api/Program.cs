@@ -1,3 +1,5 @@
+using CSharpApp.Api.Endpoints;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
@@ -13,22 +15,16 @@ builder.Services.AddApiVersioning();
 
 var app = builder.Build();
 
+app.CreateApiVersionSet();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
+app.MapApiEndpoints();
+
 //app.UseHttpsRedirection();
-
-var versionedEndpointRouteBuilder = app.NewVersionedApi();
-
-versionedEndpointRouteBuilder.MapGet("api/v{version:apiVersion}/getproducts", async (IProductsService productsService) =>
-    {
-        var products = await productsService.GetProducts();
-        return products;
-    })
-    .WithName("GetProducts")
-    .HasApiVersion(1.0);
 
 app.Run();
