@@ -10,7 +10,7 @@ public static class GetallProductsEndpoint
         app.MapGet(ApiEndpoints.Products.Create, async (IProductsService productsService) =>
         {
             var products = await productsService.GetProducts();
-            return products;
+            return products ?? [];
         })
         .WithName(Name)
         .WithApiVersionSet(ApiVersioning.VersionSet!)

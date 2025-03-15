@@ -14,13 +14,24 @@ public class ProductsService : IProductsService
         _logger = logger;
     }
 
-    public async Task<IReadOnlyCollection<Product>> GetProducts()
-    {
-        var response = await _httpClient.GetHttpResponseMessageAsync(_restApiSettings.Products!);
-        response.EnsureSuccessStatusCode();
+    public async Task<IReadOnlyCollection<Product>?> GetProducts()
+    {   
+        var response = new HttpResponseMessage();
+
+        try
+        {
+            response = await _httpClient.GetHttpResponseMessageAsync(_restApiSettings.Products!);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Falied to retive data, {httpClientException}", ex.Message);
+            return null;
+        }
+
+        response!.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
         var res = JsonSerializer.Deserialize<List<Product>>(content);
         
-        return res.AsReadOnly();
+        return res?.AsReadOnly();
     }
 }
