@@ -1,4 +1,3 @@
-using CSharpApp.Core.Dtos.ValidationDtos.Responses;
 using FluentValidation;
 using MediatR;
 
@@ -16,7 +15,6 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        // Get all validators for the request
         var context = new ValidationContext<TRequest>(request);
         var validationFailures = _validators
             .Select(validator => validator.Validate(context))
@@ -24,13 +22,11 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
             .Where(error => error != null)
             .ToList();
 
-        // If there are validation errors, throw an exception
         if (validationFailures.Any())
         {
             throw new ValidationException(validationFailures);
         }
 
-        // Proceed to the next handler if validation passes
         return await next();
     }
 }
