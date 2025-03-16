@@ -1,4 +1,4 @@
-namespace CSharpApp.Core.Dtos.ValidationDtos.Responses;
+namespace CSharpApp.Core.Dtos.ValidationDtos;
 
 public class ValidationFailureResponse
 {

@@ -1,5 +1,5 @@
 
-using CSharpApp.Core.Dtos.ValidationDtos.Responses;
+using CSharpApp.Core.Dtos.ValidationDtos;
 using FluentValidation;
 
 namespace CSharpApp.Api.Middlewares.ValidationMiddlewares;
