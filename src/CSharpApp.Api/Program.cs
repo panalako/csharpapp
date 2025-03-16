@@ -1,5 +1,6 @@
 using CSharpApp.Api.Behaviors;
 using CSharpApp.Api.Endpoints;
+using CSharpApp.Api.Middlewares.PerformanceMiddlewares;
 using CSharpApp.Api.Middlewares.ValidationMiddlewares;
 using CSharpApp.Application.Queries.Products.GetAllProducts;
 using CSharpApp.Infrastructure.ValidationExtentions;
@@ -27,6 +28,7 @@ builder.Services.AddMediatR(config =>
 });
 
 var app = builder.Build();
+// app.UseMiddleware<PerformanceMiddleware>();
 
 app.CreateApiVersionSet();
 
