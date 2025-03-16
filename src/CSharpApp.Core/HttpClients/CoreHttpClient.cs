@@ -11,4 +11,10 @@ public class CoreHttpClient(HttpClient httpClient) : ICoreHttpClient
         path = path.StartsWith('/') ? path.TrimStart('/') : path;
         return await _httpClient.GetAsync(path, cancellationToken);
     }
+
+    public async Task<HttpResponseMessage?> GetHttpResponseMessageAsync(string path, StringContent data, CancellationToken cancellationToken = default)
+    {
+        path = path.StartsWith('/') ? path.TrimStart('/') : path;
+        return await _httpClient.PostAsync(path, data, cancellationToken);
+    }
 }

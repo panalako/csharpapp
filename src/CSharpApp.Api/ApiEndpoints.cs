@@ -11,5 +11,6 @@ public static class ApiEndpoints
         public const string GetAll = ProductsBase;
         public const string GetById = $"{ProductsBase}/{{productId:int}}";
         public const string GetBySlug = $"{ProductsBase}/{{productSlug}}";
+        public const string Create = ProductsBase;
     }
 }
