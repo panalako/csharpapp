@@ -8,6 +8,6 @@ public static class ApiEndpoints
     {
         private const string ProductsBase = $"{ApiBase}/products";
 
-        public const string Create = ProductsBase;
+        public const string GetAll = ProductsBase;
     }
 }

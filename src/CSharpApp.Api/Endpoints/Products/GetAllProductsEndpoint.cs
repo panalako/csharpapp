@@ -1,3 +1,6 @@
+using CSharpApp.Application.Queries.Products.GetAllProducts;
+using MediatR;
+
 namespace CSharpApp.Api.Endpoints.Products;
 
 public static class GetallProductsEndpoint
@@ -6,10 +9,9 @@ public static class GetallProductsEndpoint
 
     public static IEndpointRouteBuilder MapGetAllProducts(this IEndpointRouteBuilder app)
     {
-        // var versionedEndpointRouteBuilder = app.NewVersionedApi();
-        app.MapGet(ApiEndpoints.Products.Create, async (IProductsService productsService) =>
+        app.MapGet(ApiEndpoints.Products.GetAll, async (IMediator mediator, CancellationToken cancellationToken) =>
         {
-            var products = await productsService.GetProducts();
+            var products = await mediator.Send(new GetAllProductsQuery(), cancellationToken);
             return products ?? [];
         })
         .WithName(Name)

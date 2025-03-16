@@ -1,4 +1,5 @@
 using CSharpApp.Api.Endpoints;
+using CSharpApp.Application.Queries.Products.GetAllProducts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,8 @@ builder.Services.AddDefaultConfiguration();
 builder.Services.AddHttpConfiguration();
 builder.Services.AddProblemDetails();
 builder.Services.AddApiVersioning();
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetAllProductsHandler>());
 
 var app = builder.Build();
 
