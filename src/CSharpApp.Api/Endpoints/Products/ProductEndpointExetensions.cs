@@ -6,6 +6,7 @@ public static class ProductEndpointExetensions
     {
         app.MapGetAllProducts();
         app.MapGetProductsById();
+        app.MapGetProductsBySlug();
         return app;
     }
 }

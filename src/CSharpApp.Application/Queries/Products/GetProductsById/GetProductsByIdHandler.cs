@@ -1,4 +1,3 @@
-
 namespace CSharpApp.Application.Queries.Products.GetProductsById;
 
 public class GetProductsByIdHandler(ICoreHttpClient httpClient, IOptions<RestApiSettings> restApiSettings, ILogger<GetProductsByIdHandler> logger) : IRequestHandler<GetProductsByIdQuery, Product?>
