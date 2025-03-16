@@ -5,7 +5,7 @@ public static class CategoriesEndpointExetensions
     public static IEndpointRouteBuilder MapCategoriesEndpoints(this IEndpointRouteBuilder app)
     {
         app.MapGetAllCategories();
-        // app.MapGetCategoriesById();
+        app.MapGetCategoriesById();
         // app.MapGetCategoriesBySlug();
         // app.MapCreateCategories();
         return app;

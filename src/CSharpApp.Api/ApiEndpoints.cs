@@ -16,11 +16,11 @@ public static class ApiEndpoints
 
     public static class Categories
     {
-        private const string ProductsBase = $"{ApiBase}/categories";
+        private const string CategoryBase = $"{ApiBase}/categories";
 
-        public const string GetAll = ProductsBase;
-        public const string GetById = $"{ProductsBase}/{{categoryId:int}}";
-        public const string GetBySlug = $"{ProductsBase}/{{categorySlug}}";
-        public const string Create = ProductsBase;
+        public const string GetAll = CategoryBase;
+        public const string GetById = $"{CategoryBase}/{{categoryId:int}}";
+        public const string GetBySlug = $"{CategoryBase}/{{categorySlug}}";
+        public const string Create = CategoryBase;
     }
 }
