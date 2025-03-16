@@ -13,4 +13,14 @@ public static class ApiEndpoints
         public const string GetBySlug = $"{ProductsBase}/{{productSlug}}";
         public const string Create = ProductsBase;
     }
+
+    public static class Categories
+    {
+        private const string ProductsBase = $"{ApiBase}/categories";
+
+        public const string GetAll = ProductsBase;
+        public const string GetById = $"{ProductsBase}/{{categoryId:int}}";
+        public const string GetBySlug = $"{ProductsBase}/{{categorySlug}}";
+        public const string Create = ProductsBase;
+    }
 }

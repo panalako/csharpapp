@@ -7,7 +7,7 @@ public static class ProductEndpointExetensions
         app.MapGetAllProducts();
         app.MapGetProductsById();
         app.MapGetProductsBySlug();
-        app.MapCreateProduct();
+        app.MapCreateProducts();
         return app;
     }
 }

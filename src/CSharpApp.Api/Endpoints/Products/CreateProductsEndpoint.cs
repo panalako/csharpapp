@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CSharpApp.Api.Endpoints.Products;
 
-public static class CreateProductEndpoint
+public static class CreateProductsEndpoint
 {
     public const string Name = "CreateProduct";
 
-    public static IEndpointRouteBuilder MapCreateProduct(this IEndpointRouteBuilder app)
+    public static IEndpointRouteBuilder MapCreateProducts(this IEndpointRouteBuilder app)
     {
         app.MapPost(ApiEndpoints.Products.Create, async ([FromBody] CreateProductCommand command, IMediator mediator, CancellationToken cancellationToken) =>
         {
