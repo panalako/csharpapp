@@ -9,5 +9,6 @@ public static class ApiEndpoints
         private const string ProductsBase = $"{ApiBase}/products";
 
         public const string GetAll = ProductsBase;
+        public const string GetById = $"{ProductsBase}/{{productId:int}}";
     }
 }

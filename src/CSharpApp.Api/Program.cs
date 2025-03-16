@@ -1,5 +1,8 @@
+using CSharpApp.Api.Behaviors;
 using CSharpApp.Api.Endpoints;
+using CSharpApp.Api.Middlewares.ValidationMiddlewares;
 using CSharpApp.Application.Queries.Products.GetAllProducts;
+using CSharpApp.Infrastructure.ValidationExtentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +17,14 @@ builder.Services.AddHttpConfiguration();
 builder.Services.AddProblemDetails();
 builder.Services.AddApiVersioning();
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetAllProductsHandler>());
+builder.Services.AddValidators();
+
+builder.Services.AddMediatR(config => 
+{
+    config.RegisterServicesFromAssemblyContaining<GetAllProductsHandler>();
+    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+    
+});
 
 var app = builder.Build();
 
@@ -26,6 +36,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseMiddleware<ValidationMiddleware>();
 app.MapApiEndpoints();
 
 //app.UseHttpsRedirection();

@@ -1,3 +1,5 @@
+using CSharpApp.Api.Endpoints.Products;
+
 namespace CSharpApp.Api.Endpoints;
 
 public static class EndpointsExtensions

@@ -5,7 +5,7 @@ namespace CSharpApp.Api.Endpoints.Products;
 
 public static class GetallProductsEndpoint
 {
-    public const string Name = "GetProducts";
+    public const string Name = "GetAllProducts";
 
     public static IEndpointRouteBuilder MapGetAllProducts(this IEndpointRouteBuilder app)
     {
