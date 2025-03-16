@@ -7,7 +7,7 @@ public static class CategoriesEndpointExetensions
         app.MapGetAllCategories();
         app.MapGetCategoriesById();
         app.MapGetCategoriesBySlug();
-        // app.MapCreateCategories();
+        app.MapCreateCategories();
         return app;
     }
 }

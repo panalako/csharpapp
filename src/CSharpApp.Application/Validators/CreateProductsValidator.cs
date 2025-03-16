@@ -1,9 +1,9 @@
-using CSharpApp.Application.Commands.Products.CreateProduct;
+using CSharpApp.Application.Commands.Products.CreateProducts;
 using FluentValidation;
 
 namespace CSharpApp.Application.Validators;
 
-public class CreateProductsValidator : AbstractValidator<CreateProductCommand>
+public class CreateProductsValidator : AbstractValidator<CreateProductsCommand>
 {
     public CreateProductsValidator()
     {

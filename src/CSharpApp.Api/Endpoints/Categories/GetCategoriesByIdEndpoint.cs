@@ -12,14 +12,14 @@ public static class GetCategoriesByIdEndpoint
     {
         app.MapGet(ApiEndpoints.Categories.GetById, async ([FromRoute] int categoryId, IMediator mediator, CancellationToken cancellationToken) =>
         {
-            var product = await mediator.Send(new GetCategoriesByIdQuery(categoryId), cancellationToken);
+            var category = await mediator.Send(new GetCategoriesByIdQuery(categoryId), cancellationToken);
             
-            if (product is null)
+            if (category is null)
             {
                 return Results.NotFound();
             }
 
-            return Results.Ok(product);
+            return Results.Ok(category);
 
         })
         .WithName(Name)

@@ -1,4 +1,4 @@
-using CSharpApp.Application.Commands.Products.CreateProduct;
+using CSharpApp.Application.Commands.Products.CreateProducts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +10,7 @@ public static class CreateProductsEndpoint
 
     public static IEndpointRouteBuilder MapCreateProducts(this IEndpointRouteBuilder app)
     {
-        app.MapPost(ApiEndpoints.Products.Create, async ([FromBody] CreateProductCommand command, IMediator mediator, CancellationToken cancellationToken) =>
+        app.MapPost(ApiEndpoints.Products.Create, async ([FromBody] CreateProductsCommand command, IMediator mediator, CancellationToken cancellationToken) =>
         {
             var product = await mediator.Send(command, cancellationToken);
             if (product is null) return Results.BadRequest();

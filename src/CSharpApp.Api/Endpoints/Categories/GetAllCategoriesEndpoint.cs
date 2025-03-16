@@ -1,5 +1,6 @@
 using CSharpApp.Application.Queries.Categories.GetAllCategories;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CSharpApp.Api.Endpoints.Categories;
 
@@ -11,8 +12,8 @@ public static class GetAllCategoriesEndpoint
     {
         app.MapGet(ApiEndpoints.Categories.GetAll, async (IMediator mediator, CancellationToken cancellationToken) =>
         {
-            var products = await mediator.Send(new GetAllCategoriesQuery(), cancellationToken);
-            return products ?? [];
+            var categories = await mediator.Send(new GetAllCategoriesQuery(), cancellationToken);
+            return Results.Ok(categories ?? []);
         })
         .WithName(Name)
         .WithApiVersionSet(ApiVersioning.VersionSet!)

@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace CSharpApp.Application.Commands.Products.CreateProduct;
+namespace CSharpApp.Application.Commands.Products.CreateProducts;
 
-public class CreateProductCommand : IRequest<Product?>
+public class CreateProductsCommand : IRequest<Product?>
 {
     [JsonPropertyName("title")]
     public string? Title { get; init; }

@@ -1,14 +1,15 @@
 using System.Text;
+using CSharpApp.Core.Dtos.CategoriesDtos;
 
-namespace CSharpApp.Application.Commands.Products.CreateProduct;
+namespace CSharpApp.Application.Commands.Categories.CreateCategories;
 
-public class CreateProductHandler(ICoreHttpClient httpClient, IOptions<RestApiSettings> restApiSettings, ILogger<CreateProductHandler> logger) : IRequestHandler<CreateProductCommand, Product?>
+public class CreateCategoriesHandler(ICoreHttpClient httpClient, IOptions<RestApiSettings> restApiSettings, ILogger<CreateCategoriesHandler> logger) : IRequestHandler<CreateCategoriesCommand, CategoriesResponse?>
 {
     private readonly ICoreHttpClient _httpClient = httpClient;
     private readonly RestApiSettings _restApiSettings = restApiSettings.Value;
-    private readonly ILogger<CreateProductHandler> _logger = logger;
+    private readonly ILogger<CreateCategoriesHandler> _logger = logger;
 
-    public async Task<Product?> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task<CategoriesResponse?> Handle(CreateCategoriesCommand request, CancellationToken cancellationToken)
     {
         HttpResponseMessage? response = new();
         try
@@ -16,10 +17,10 @@ public class CreateProductHandler(ICoreHttpClient httpClient, IOptions<RestApiSe
             var json = JsonSerializer.Serialize(request);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-            response = await _httpClient.GetHttpResponseMessageAsync(_restApiSettings.Products!, data, cancellationToken);
+            response = await _httpClient.GetHttpResponseMessageAsync(_restApiSettings.Categories!, data, cancellationToken);
             response!.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
-            var res = JsonSerializer.Deserialize<Product>(content);
+            var res = JsonSerializer.Deserialize<CategoriesResponse>(content);
 
             return res;
         }
