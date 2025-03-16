@@ -1,7 +1,7 @@
 using CSharpApp.Application.Commands.Products.CreateProducts;
 using FluentValidation;
 
-namespace CSharpApp.Application.Validators;
+namespace CSharpApp.Application.Validators.Categories;
 
 public class CreateProductsValidator : AbstractValidator<CreateProductsCommand>
 {

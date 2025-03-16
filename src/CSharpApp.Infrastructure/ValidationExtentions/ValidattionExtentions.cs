@@ -1,4 +1,4 @@
-using CSharpApp.Application.Validators;
+using CSharpApp.Application.Validators.Categories;
 using FluentValidation;
 
 namespace CSharpApp.Infrastructure.ValidationExtentions;

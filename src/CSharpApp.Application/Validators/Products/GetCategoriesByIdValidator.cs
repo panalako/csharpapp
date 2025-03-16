@@ -1,7 +1,7 @@
 using CSharpApp.Application.Queries.Categories.GetCategoriesById;
 using FluentValidation;
 
-namespace CSharpApp.Application.Validators;
+namespace CSharpApp.Application.Validators.Categories;
 
 public class GetCategoriesByIdValidator : AbstractValidator<GetCategoriesByIdQuery>
 {

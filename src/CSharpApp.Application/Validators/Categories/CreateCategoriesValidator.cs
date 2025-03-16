@@ -1,7 +1,7 @@
 using CSharpApp.Application.Commands.Categories.CreateCategories;
 using FluentValidation;
 
-namespace CSharpApp.Application.Validators;
+namespace CSharpApp.Application.Validators.Categories;
 
 public class CreateCategoriesValidator : AbstractValidator<CreateCategoriesCommand>
 {
