@@ -13,7 +13,8 @@ public class GetAllCategoriesHandler(ICoreHttpClient httpClient, IOptions<RestAp
         try
         {
             var response = await _httpClient.GetHttpResponseMessageAsync(_restApiSettings.Categories!, cancellationToken);
-            response!.EnsureSuccessStatusCode();
+            if(response is null) return null;
+            response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
             var res = JsonSerializer.Deserialize<List<CategoriesResponse>>(content);
 

@@ -11,7 +11,8 @@ public class GetAllProductsHandler(ICoreHttpClient httpClient, IOptions<RestApiS
         try
         {
             var response = await _httpClient.GetHttpResponseMessageAsync(_restApiSettings.Products!, cancellationToken);
-            response!.EnsureSuccessStatusCode();
+            if(response is null) return null;
+            response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
             var res = JsonSerializer.Deserialize<List<Product>>(content);
 

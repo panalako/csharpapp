@@ -17,7 +17,8 @@ public class CreateProductHandler(ICoreHttpClient httpClient, IOptions<RestApiSe
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             response = await _httpClient.GetHttpResponseMessageAsync(_restApiSettings.Products!, data, cancellationToken);
-            response!.EnsureSuccessStatusCode();
+            if(response is null) return null;
+            response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
             var res = JsonSerializer.Deserialize<Product>(content);
 

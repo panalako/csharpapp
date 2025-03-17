@@ -1,4 +1,4 @@
-using CSharpApp.Core.HttpClients;
+using CSharpApp.Application.HttpClients;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Timeout;
@@ -13,6 +13,22 @@ public static class HttpConfiguration
         var httpClientSettings = services.BuildServiceProvider().GetRequiredService<IOptions<HttpClientSettings>>().Value;
 
         services.AddHttpClient<ICoreHttpClient, CoreHttpClient>(client =>
+        {
+            client.BaseAddress = new Uri(restApiSettings.BaseUrl!);
+        })
+        .SetHandlerLifetime(TimeSpan.FromMinutes(httpClientSettings.LifeTime))
+        .AddTransientHttpErrorPolicy(policy => policy.Or<TimeoutRejectedException>().WaitAndRetryAsync(
+            httpClientSettings.RetryCount,
+            retryAttempt => TimeSpan.FromMilliseconds(httpClientSettings.SleepDuration / 2)
+        ))
+        .AddTransientHttpErrorPolicy(policy => policy.Or<TimeoutRejectedException>().CircuitBreakerAsync(
+            httpClientSettings.RetryCount,
+            TimeSpan.FromSeconds(httpClientSettings.SleepDuration)
+        ))
+        .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(1));
+
+        
+        services.AddHttpClient<IAuthHttpClient, AuthHttpClient>(client =>
         {
             client.BaseAddress = new Uri(restApiSettings.BaseUrl!);
         })

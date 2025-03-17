@@ -18,7 +18,8 @@ public class CreateCategoriesHandler(ICoreHttpClient httpClient, IOptions<RestAp
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             response = await _httpClient.GetHttpResponseMessageAsync(_restApiSettings.Categories!, data, cancellationToken);
-            response!.EnsureSuccessStatusCode();
+            if(response is null) return null;
+            response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
             var res = JsonSerializer.Deserialize<CategoriesResponse>(content);
 

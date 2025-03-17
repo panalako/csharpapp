@@ -11,7 +11,8 @@ public class GetProductsBySlugHandler(ICoreHttpClient httpClient, IOptions<RestA
         try
         {
             var response = await _httpClient.GetHttpResponseMessageAsync($"{_restApiSettings.Products!}/slug/{request.ProductSlug}", cancellationToken);
-            response!.EnsureSuccessStatusCode();
+            if(response is null) return null;
+            response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
             var res = JsonSerializer.Deserialize<Product>(content);
 

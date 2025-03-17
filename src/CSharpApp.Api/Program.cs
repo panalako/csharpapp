@@ -1,5 +1,6 @@
 using CSharpApp.Api.Behaviors;
 using CSharpApp.Api.Endpoints;
+using CSharpApp.Api.Middlewares.AuthMiddlewares;
 using CSharpApp.Api.Middlewares.PerformanceMiddlewares;
 using CSharpApp.Api.Middlewares.ValidationMiddlewares;
 using CSharpApp.Application.Queries.Products.GetAllProducts;
@@ -18,6 +19,7 @@ builder.Services.AddHttpConfiguration();
 builder.Services.AddProblemDetails();
 builder.Services.AddApiVersioning();
 
+builder.Services.AddAuthTokenProvider();
 builder.Services.AddValidators();
 
 builder.Services.AddMediatR(config => 
@@ -28,7 +30,7 @@ builder.Services.AddMediatR(config =>
 });
 
 var app = builder.Build();
-// app.UseMiddleware<PerformanceMiddleware>();
+app.UseMiddleware<PerformanceMiddleware>();
 
 app.CreateApiVersionSet();
 
@@ -38,6 +40,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseMiddleware<TokenRefreshMiddleware>();
 app.UseMiddleware<ValidationMiddleware>();
 app.MapApiEndpoints();
 
