@@ -1,7 +1,7 @@
 using CSharpApp.Application.Queries.Products.GetProductsById;
 using FluentValidation;
 
-namespace CSharpApp.Application.Validators.Categories;
+namespace CSharpApp.Application.Validators.Products;
 
 public class GetProductsByIdValidator : AbstractValidator<GetProductsByIdQuery>
 {
