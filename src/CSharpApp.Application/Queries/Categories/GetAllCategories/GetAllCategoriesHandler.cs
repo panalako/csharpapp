@@ -20,7 +20,7 @@ public class GetAllCategoriesHandler(ICoreHttpClient httpClient, IOptions<RestAp
 
             return res?.AsReadOnly();
         }
-        catch (Exception ex)
+        catch (HttpRequestException ex)
         {
             _logger.LogError("Falied to retive data, {httpClientException}", ex.Message);
             return null;

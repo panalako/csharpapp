@@ -8,20 +8,6 @@ public class AuthHttpClient(HttpClient httpClient, IOptions<RestApiSettings> res
     private readonly HttpClient _httpClient = httpClient;
     private readonly RestApiSettings _restApiSettings = restApiSettings.Value;
 
-    public async Task<HttpResponseMessage?> GetHttpResponseMessageAsync(string path, CancellationToken cancellationToken = default)
-    {
-        // string token = await _authTokenProvider.GetAccessToken();
-        // _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        path = path.StartsWith('/') ? path.TrimStart('/') : path;
-        return await _httpClient.GetAsync(path, cancellationToken);
-    }
-
-    public async Task<HttpResponseMessage?> GetHttpResponseMessageAsync(string path, StringContent data, CancellationToken cancellationToken = default)
-    {
-        path = path.StartsWith('/') ? path.TrimStart('/') : path;
-        return await _httpClient.PostAsync(path, data, cancellationToken);
-    }
-
     public async Task<HttpResponseMessage> RequestToken()
     {
         var path = _restApiSettings.Auth!;

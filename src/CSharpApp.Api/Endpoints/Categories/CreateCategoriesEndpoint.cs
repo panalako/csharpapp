@@ -1,6 +1,8 @@
+using System.Security.Authentication;
 using System.Text.Json;
 using CSharpApp.Application.Commands.Categories.CreateCategories;
 using CSharpApp.Core.Dtos;
+using CSharpApp.Core.Dtos.AuthDtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +21,10 @@ public static class CreateCategoriesEndpoint
                 var category = await mediator.Send(command, cancellationToken);
                 return TypedResults.CreatedAtRoute(category, GetCategoriesByIdEndpoint.Name, new { categoryId = category!.Id });
             }
+            catch (AuthenticationException ex)
+            {
+                return Results.BadRequest(JsonSerializer.Deserialize<AuthendiationFailureDto>(ex.Message));
+            } 
             catch (HttpRequestException ex)
             {
                 return Results.BadRequest(JsonSerializer.Deserialize<ForeignServerCreateErrorDto>(ex.Message));

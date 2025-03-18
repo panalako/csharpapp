@@ -20,7 +20,7 @@ public class GetCategoriesByIdHandler(ICoreHttpClient httpClient, IOptions<RestA
 
             return res;
         }
-        catch (Exception ex)
+        catch (HttpRequestException ex)
         {
             _logger.LogError("Falied to retive data, {httpClientException}", ex.Message);
             return null;

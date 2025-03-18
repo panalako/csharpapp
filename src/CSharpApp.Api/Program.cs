@@ -43,7 +43,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseMiddleware<TokenRefreshMiddleware>();
+// app.UseMiddleware<TokenRefreshMiddleware>();
 app.UseMiddleware<ValidationMiddleware>();
 app.MapApiEndpoints();
 

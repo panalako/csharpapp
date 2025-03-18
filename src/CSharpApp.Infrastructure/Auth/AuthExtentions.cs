@@ -6,7 +6,7 @@ public static class AuthExtentions
 {
     public static IServiceCollection AddAuthTokenProvider(this IServiceCollection services)
     {
-       services.AddSingleton<AuthToken>(); 
+        services.AddSingleton<IAuthService, AuthService>();
         return services;
     }
 }

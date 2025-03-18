@@ -1,4 +1,7 @@
+using System.Security.Authentication;
+using System.Text.Json;
 using CSharpApp.Application.Queries.Products.GetProductsBySlug;
+using CSharpApp.Core.Dtos.AuthDtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,14 +15,21 @@ public static class GetProductsBySlugEndpoint
     {
         app.MapGet(ApiEndpoints.Products.GetBySlug, async ([FromRoute] string productSlug, IMediator mediator, CancellationToken cancellationToken) =>
         {
-            var product = await mediator.Send(new GetProductsBySlugQuery(productSlug), cancellationToken);
-            
-            if (product is null)
+            try
             {
-                return Results.NotFound();
-            }
+                var product = await mediator.Send(new GetProductsBySlugQuery(productSlug), cancellationToken);
 
-            return Results.Ok(product);
+                if (product is null)
+                {
+                    return Results.NotFound();
+                }
+
+                return Results.Ok(product);
+            }
+            catch (AuthenticationException ex)
+            {
+                return Results.BadRequest(JsonSerializer.Deserialize<AuthendiationFailureDto>(ex.Message));
+            }
 
         })
         .WithName(Name)

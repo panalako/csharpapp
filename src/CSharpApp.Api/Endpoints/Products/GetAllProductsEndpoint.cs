@@ -1,4 +1,7 @@
+using System.Security.Authentication;
+using System.Text.Json;
 using CSharpApp.Application.Queries.Products.GetAllProducts;
+using CSharpApp.Core.Dtos.AuthDtos;
 using MediatR;
 
 namespace CSharpApp.Api.Endpoints.Products;
@@ -11,8 +14,15 @@ public static class GetallProductsEndpoint
     {
         app.MapGet(ApiEndpoints.Products.GetAll, async (IMediator mediator, CancellationToken cancellationToken) =>
         {
-            var products = await mediator.Send(new GetAllProductsQuery(), cancellationToken);
-            return products ?? [];
+            try
+            {
+                var products = await mediator.Send(new GetAllProductsQuery(), cancellationToken);
+                return Results.Ok(products ?? []);
+            }
+            catch (AuthenticationException ex)
+            {
+                return Results.BadRequest(JsonSerializer.Deserialize<AuthendiationFailureDto>(ex.Message));
+            }
         })
         .WithName(Name)
         .WithApiVersionSet(ApiVersioning.VersionSet!)
