@@ -11,8 +11,6 @@ public static class DefaultConfiguration
         services.Configure<HttpClientSettings>(configuration.GetSection(nameof(HttpClientSettings)));
         services.Configure<OpenTelemetrySettings>(configuration.GetSection(nameof(OpenTelemetrySettings)));
 
-        services.AddSingleton<IProductsService, ProductsService>();
-
         return services;
     }
 }

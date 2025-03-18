@@ -1,7 +1,5 @@
 using CSharpApp.Api.Behaviors;
 using CSharpApp.Api.Endpoints;
-using CSharpApp.Api.Middlewares.AuthMiddlewares;
-using CSharpApp.Api.Middlewares.PerformanceMiddlewares;
 using CSharpApp.Api.Middlewares.ValidationMiddlewares;
 using CSharpApp.Application.Queries.Products.GetAllProducts;
 using CSharpApp.Infrastructure.ValidationExtentions;
@@ -33,7 +31,6 @@ builder.Logging.IncludeOpenTelemetryLogs();
 builder.Services.IncludeOpenTelemetry();
 
 var app = builder.Build();
-app.UseMiddleware<PerformanceMiddleware>();
 
 app.CreateApiVersionSet();
 
@@ -43,7 +40,6 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-// app.UseMiddleware<TokenRefreshMiddleware>();
 app.UseMiddleware<ValidationMiddleware>();
 app.MapApiEndpoints();
 
