@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace CSharpApp.Application.Commands.Products.CreateProducts;
 
@@ -26,9 +27,9 @@ public class CreateProductHandler(ICoreHttpClient httpClient, IOptions<RestApiSe
         }
         catch (Exception ex)
         {
-            var responseError = response!.Content.ReadAsStringAsync();
+            var responseError = response!.Content.ReadAsStringAsync(cancellationToken);
             _logger.LogError("Falied to retive data, {httpClientException}, {response.Content}", ex.Message, responseError.Result);
-            return null;
+            throw new HttpRequestException($"{responseError.Result}");
         }
     }
 }

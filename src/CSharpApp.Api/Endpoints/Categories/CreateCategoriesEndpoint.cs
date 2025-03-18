@@ -1,4 +1,6 @@
+using System.Text.Json;
 using CSharpApp.Application.Commands.Categories.CreateCategories;
+using CSharpApp.Core.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,9 +14,15 @@ public static class CreateCategoriesEndpoint
     {
         app.MapPost(ApiEndpoints.Categories.Create, async ([FromBody] CreateCategoriesCommand command, IMediator mediator, CancellationToken cancellationToken) =>
         {
-            var category = await mediator.Send(command, cancellationToken);
-            if (category is null) return Results.BadRequest();
-            return TypedResults.CreatedAtRoute(category, GetCategoriesByIdEndpoint.Name, new { categoryId = category!.Id });
+            try
+            {
+                var category = await mediator.Send(command, cancellationToken);
+                return TypedResults.CreatedAtRoute(category, GetCategoriesByIdEndpoint.Name, new { categoryId = category!.Id });
+            }
+            catch (HttpRequestException ex)
+            {
+                return Results.BadRequest(JsonSerializer.Deserialize<ForeignServerCreateErrorDto>(ex.Message));
+            }
         })
         .WithName(Name)
         .WithApiVersionSet(ApiVersioning.VersionSet!)

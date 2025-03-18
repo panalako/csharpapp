@@ -27,9 +27,9 @@ public class CreateCategoriesHandler(ICoreHttpClient httpClient, IOptions<RestAp
         }
         catch (Exception ex)
         {
-            var responseError = response!.Content.ReadAsStringAsync();
+            var responseError = response!.Content.ReadAsStringAsync(cancellationToken);
             _logger.LogError("Falied to retive data, {httpClientException}, {response.Content}", ex.Message, responseError.Result);
-            return null;
+            throw new HttpRequestException($"{responseError.Result}");
         }
     }
 }
