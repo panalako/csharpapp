@@ -29,6 +29,9 @@ builder.Services.AddMediatR(config =>
     
 });
 
+builder.Logging.IncludeOpenTelemetryLogs();
+builder.Services.IncludeOpenTelemetry();
+
 var app = builder.Build();
 app.UseMiddleware<PerformanceMiddleware>();
 

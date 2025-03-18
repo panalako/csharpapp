@@ -1,0 +1,28 @@
+services:
+  csharpapp:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    container_name: csharpapp
+    depends_on:
+      - aspire-dashboard
+    environment:
+      - OpenTelemetrySettings:AspireUrl=http://aspire-dashboard:18889
+    networks:
+      - csharpapp-network
+
+  aspire-dashboard:
+    image: mcr.microsoft.com/dotnet/aspire-dashboard
+    container_name: aspire-dashboard
+    ports:
+      - "18888:18888"
+      - "18889:18889"
+    environment:
+      - DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=true
+    networks:
+      - csharpapp-network
+
+networks:
+  csharpapp-network:
+    driver: "bridge"
