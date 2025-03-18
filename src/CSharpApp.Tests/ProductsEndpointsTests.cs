@@ -20,7 +20,7 @@ public class ProductsEndpointsTests
     }
 
     [Fact]
-    public async Task GetAllProductsSuccesfully()
+    public async Task Endopoint_ShouldReturnAllProducts_WhenApiCallIsSuccessful()
     {
         var path = ApiEndpoints.Products.GetAll;
         var response = await _httpClient.GetAsync(path.Replace(PathVersionVariable, ApiVersion));
@@ -29,7 +29,7 @@ public class ProductsEndpointsTests
     }
 
     [Fact]
-    public async Task GetAllProductsFailiure()
+    public async Task Endopoint_ShouldReturnNull_WhenApiCallFails()
     {
         await using var application = new MediatorReturnsNullProducts();
         var pghttpClient = application.CreateDefaultClient();

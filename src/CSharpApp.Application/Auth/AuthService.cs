@@ -5,19 +5,12 @@ using CSharpApp.Core.Dtos.AuthDtos;
 namespace CSharpApp.Application.Auth;
 
 
-public class AuthService : IAuthService
+public class AuthService(IAuthHttpClient httpClient, ILogger<AuthService> logger) : IAuthService
 {
     private readonly SemaphoreSlim _lock = new(1, 1);
-    private IAuthHttpClient _httpClient { get; set; }
-    private readonly ILogger<AuthService> _logger;
-    private IAuthToken _authToken { get; set; }
-
-    public AuthService(IAuthHttpClient httpClient, ILogger<AuthService> logger)
-    {
-        _httpClient = httpClient;
-        _logger = logger;
-        _authToken = new AuthToken();
-    }
+    private IAuthHttpClient _httpClient { get; set; } = httpClient;
+    private readonly ILogger<AuthService> _logger = logger;
+    private IAuthToken _authToken { get; set; } = new AuthToken();
 
     public async Task<string?> GetAccessToken()
     {
@@ -120,7 +113,7 @@ public class AuthService : IAuthService
     private static DateTime UnixTimeStampToDateTime(int unixTimeStamp)
     {
         var dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-        dateTime = dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+        dateTime = dateTime.AddSeconds(unixTimeStamp).ToUniversalTime();
         return dateTime;
     }
 
